@@ -122,11 +122,10 @@ def main():
             else:
                 if e1_destroy_index == 0:
                     enemy1_down_sound.play()
-                if not (delay % 3):
-                    screen.blit(each.destroy_images[e1_destroy_index], each.rect)
-                    e1_destroy_index = (e1_destroy_index + 1) % 4
-                    if e1_destroy_index == 0:
-                        each.reset()
+                screen.blit(each.destroy_images[e1_destroy_index], each.rect)
+                e1_destroy_index = (e1_destroy_index + 1) % 4
+                if e1_destroy_index == 0:
+                    each.reset()
 
         # 当我方飞机存活状态, 正常展示
         if our_plane.active:
