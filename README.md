@@ -1,7 +1,7 @@
 # 回忆中的飞机大战
 
 ## 如图
-![]("material/play.jpg")
+![Image text](https://raw.githubusercontent.com/csrftoken/PlayPlane/master/material/play.jpg)
 
 ## 使用
 ```
