@@ -94,4 +94,4 @@ ENV/
 */migrations
 db.sqlite3
 
-
+.idea/
