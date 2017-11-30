@@ -1,7 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# Date: 2017/11/26
-
 
 """
     子弹的实现
@@ -17,7 +15,7 @@ class Bullet(pygame.sprite.Sprite):
         self.image = pygame.image.load("material/image/bullet1.png")
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = position
-        self.speed = 20
+        self.speed = 30
         self.active = True
         self.mask = pygame.mask.from_surface(self.image)
 

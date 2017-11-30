@@ -2,63 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import pygame
 
 from pygame.locals import *
 
+from config.settings import *
 from src.plane import OurPlane
 from src.enemy import SmallEnemy
 from src.bullet import Bullet
 
 
-pygame.init()
-pygame.mixer.init()
-
 bg_size = 480, 852  # 初始化游戏背景大小(宽, 高)
 screen = pygame.display.set_mode(bg_size)  # 设置背景对话框
+pygame.display.set_caption("飞机大战")  # 设置标题
 
 background = pygame.image.load("material/image/background.png")  # 加载背景图片,并设置为不透明
 
 # 获取我方飞机
 our_plane = OurPlane(bg_size)
-
-
-# 加载游戏背景音乐
-pygame.mixer.music.load("material/sound/game_music.wav")
-pygame.mixer.music.set_volume(0.2)
-
-bullet_sound = pygame.mixer.Sound("material/sound/bullet.wav")
-bullet_sound.set_volume(0.2)
-
-big_enemy_flying_sound = pygame.mixer.Sound("material/sound/big_spaceship_flying.wav")
-big_enemy_flying_sound.set_volume(0.2)
-
-enemy1_down_sound = pygame.mixer.Sound("material/sound/enemy1_down.wav")
-enemy1_down_sound.set_volume(0.2)
-
-enemy2_down_sound = pygame.mixer.Sound("material/sound/enemy2_down.wav")
-enemy2_down_sound.set_volume(0.2)
-
-enemy3_down_sound = pygame.mixer.Sound("material/sound/enemy3_down.wav")
-enemy3_down_sound.set_volume(0.2)
-
-me_down_sound = pygame.mixer.Sound("material/sound/game_over.wav")
-me_down_sound.set_volume(0.2)
-
-button_down_sound = pygame.mixer.Sound("material/sound/button.wav")
-button_down_sound.set_volume(0.2)
-
-level_up_sound = pygame.mixer.Sound("material/sound/achievement.wav")
-level_up_sound.set_volume(0.2)
-
-bomb_sound = pygame.mixer.Sound("material/sound/use_bomb.wav")
-bomb_sound.set_volume(0.2)
-
-get_bomb_sound = pygame.mixer.Sound("material/sound/get_bomb.wav")
-get_bomb_sound.set_volume(0.2)
-
-get_bullet_sound = pygame.mixer.Sound("material/sound/get_double_laser.wav")
-get_bullet_sound.set_volume(0.2)
 
 
 def add_small_enemies(group1, group2, num):
@@ -79,10 +39,10 @@ def main():
     # 响应音乐
     pygame.mixer.music.play(-1)  # loops 接收该参数, -1 表示无限循环(默认循环播放一次)
     running = True
-    switch_image = False  # 切换飞机的标识位
-    delay = 60
+    switch_image = False  # 切换飞机的标识位(使飞机具有喷气式效果)
+    delay = 60  # 对一些效果进行延迟, 效果更好一些
 
-    enemies = pygame.sprite.Group()  # 生成敌方飞机组(一种精灵组用以存储所有敌机精灵, 不区分小型中型大型)
+    enemies = pygame.sprite.Group()  # 生成敌方飞机组(一种精灵组用以存储所有敌机精灵)
     small_enemies = pygame.sprite.Group()  # 敌方小型飞机组(不同型号敌机创建不同的精灵组来存储)
 
     add_small_enemies(small_enemies, enemies, 4)  # 生成若干敌方小型飞机
@@ -90,8 +50,6 @@ def main():
     # 定义子弹, 各种敌机和我方敌机的毁坏图像索引
     bullet_index = 0
     e1_destroy_index = 0
-    e2_destroy_index = 0
-    e3_destroy_index = 0
     me_destroy_index = 0
 
     # 定义子弹实例化个数
@@ -160,7 +118,7 @@ def main():
                     me_down_sound.play()
                     our_plane.reset()
 
-        # 调用 pygame 实现的碰撞方法 spritecollide
+        # 调用 pygame 实现的碰撞方法 spritecollide (我方飞机如果和敌机碰撞, 更改飞机的存活属性)
         enemies_down = pygame.sprite.spritecollide(our_plane, enemies, False, pygame.sprite.collide_mask)
         if enemies_down:
             our_plane.active = False
@@ -188,6 +146,7 @@ def main():
         if key_pressed[K_d] or key_pressed[K_RIGHT]:
             our_plane.move_right()
 
+        # 绘制图像并输出到屏幕上面
         pygame.display.flip()
 
 

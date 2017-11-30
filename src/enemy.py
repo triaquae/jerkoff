@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# Date: 2017/11/26
 
 """
     定义敌机
@@ -50,7 +49,7 @@ class SmallEnemy(pygame.sprite.Sprite):
 
     def reset(self):
         """
-        当敌机向下移动出屏幕时
+        当敌机向下移动出屏幕时, 以及敌机死亡
         :return:
         """
         self.rect.left, self.rect.top = (randint(0, self.width - self.rect.width), randint(-5 * self.rect.height, 0))

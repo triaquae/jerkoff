@@ -1,13 +1,12 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# Date: 2017/11/26
 
 """
     创建飞机
     在pygame中, 所有可移动的对象均叫可看作一个精灵(sprite)
     该类并实现了碰撞方法 spritecollide
 
-    我方飞机和敌方飞机指定掩膜属性以及生存状态标志位 添加 self.mask 属性
+    我方飞机和敌方飞机指定掩膜属性以及生存状态标志位 添加 self.mask 属性(可以实现更精准的碰撞效果)
 """
 
 # 倒入精灵模块, 使飞机可以动起来
@@ -72,7 +71,7 @@ class OurPlane(pygame.sprite.Sprite):
             self.rect.right = self.width
 
     def reset(self):
-        # 初始化飞机
+        # 初始化飞机(飞机挂了, 初始化到初始位置)
         self.rect.left, self.rect.top = (self.width - self.rect.width) // 2, (self.height - self.rect.height - 60)
         self.active = True
 
