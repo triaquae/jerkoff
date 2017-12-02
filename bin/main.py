@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-
 from pygame.locals import *
 
 from config.settings import *
@@ -15,7 +14,14 @@ bg_size = 480, 852  # 初始化游戏背景大小(宽, 高)
 screen = pygame.display.set_mode(bg_size)  # 设置背景对话框
 pygame.display.set_caption("飞机大战")  # 设置标题
 
-background = pygame.image.load("material/image/background.png")  # 加载背景图片,并设置为不透明
+background = pygame.image.load(os.path.join(BASE_DIR, "material/image/background.png"))  # 加载背景图片,并设置为不透明
+
+
+# 血槽颜色绘制
+color_black = (0, 0, 0)
+color_green = (0, 255, 0)
+color_red = (255, 0, 0)
+color_white = (255, 255, 255)
 
 # 获取我方飞机
 our_plane = OurPlane(bg_size)
@@ -45,7 +51,7 @@ def main():
     enemies = pygame.sprite.Group()  # 生成敌方飞机组(一种精灵组用以存储所有敌机精灵)
     small_enemies = pygame.sprite.Group()  # 敌方小型飞机组(不同型号敌机创建不同的精灵组来存储)
 
-    add_small_enemies(small_enemies, enemies, 4)  # 生成若干敌方小型飞机
+    add_small_enemies(small_enemies, enemies, 6)  # 生成若干敌方小型飞机
 
     # 定义子弹, 各种敌机和我方敌机的毁坏图像索引
     bullet_index = 0
@@ -74,9 +80,22 @@ def main():
         for each in small_enemies:
             if each.active:
                 # 随机循环输出小飞机敌机
-                for e in small_enemies:
-                    e.move()
-                    screen.blit(e.image, e.rect)
+                each.move()
+                screen.blit(each.image, each.rect)
+
+                pygame.draw.line(screen, color_black,
+                                 (each.rect.left, each.rect.top - 5),
+                                 (each.rect.right, each.rect.top - 5),
+                                 2)
+                energy_remain = each.energy / SmallEnemy.energy
+                if energy_remain > 0.2:  # 如果血量大约百分之二十则为绿色，否则为红色
+                    energy_color = color_green
+                else:
+                    energy_color = color_red
+                pygame.draw.line(screen, energy_color,
+                                 (each.rect.left, each.rect.top - 5),
+                                 (each.rect.left + each.rect.width * energy_remain, each.rect.top - 5),
+                                 2)
             else:
                 if e1_destroy_index == 0:
                     enemy1_down_sound.play()
