@@ -52,7 +52,7 @@ class SmallEnemy(pygame.sprite.Sprite):
 
     def reset(self):
         """
-        当敌机向下移动出屏幕时, 以及敌机死亡
+        当敌机向下移动出屏幕且飞机是需要进行随机出现的, 以及敌机死亡
         :return:
         """
         self.rect.left, self.rect.top = (randint(0, self.width - self.rect.width), randint(-5 * self.rect.height, 0))
@@ -63,10 +63,13 @@ class MidEnemy(pygame.sprite.Sprite):
 
     def __init__(self):
         super(MidEnemy, self).__init__()
+        self.image = pygame.image.load("material/image/enemy2.png")
 
 
 class BigEnemy(pygame.sprite.Sprite):
 
     def __init__(self):
         super(BigEnemy, self).__init__()
+        self.image = pygame.image.load("material/image/enemy3.png")
+
 

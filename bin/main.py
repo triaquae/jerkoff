@@ -5,7 +5,7 @@ import sys
 from pygame.locals import *
 
 from config.settings import *
-from src.plane import OurPlane
+from src.plane import OurPlane  # 导入我们的飞机
 from src.enemy import SmallEnemy
 from src.bullet import Bullet
 
